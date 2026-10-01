@@ -1,0 +1,29 @@
+{
+  "id": "opensubtitles-es",
+  "name": "OpenSubtitles ES",
+  "version": "1.0.0",
+  "description": "Subtítulos en español (lang=spa) vía opensubtitles-v3.strem.io. Requiere imdb_id; en series también season y episode.",
+  "type": "function",
+  "functionKind": "subtitles",
+  "placements": ["player"],
+  "requiredFields": ["imdb_id"],
+  "resources": ["subtitles"],
+  "logo": "https://avatars.githubusercontent.com/u/23124417?v=4",
+  "author": "opensubtitles-es",
+  "supportedTypes": ["movie", "tv", "series"],
+  "urlMovie": "https://opensubtitles-v3.strem.io/subtitles/movie/{imdb_id}.json",
+  "urlSeries": "https://opensubtitles-v3.strem.io/subtitles/series/{imdb_id}:{season}:{episode}.json",
+  "baseUrl": "https://opensubtitles-v3.strem.io",
+  "languages": ["spa"],
+  "langFilter": ["spa"],
+  "entry": "index.js",
+  "configSchema": [
+    {
+      "key": "languages",
+      "label": "Idiomas (códigos ISO, separados por coma)",
+      "type": "string",
+      "default": "spa",
+      "description": "Solo se muestran subtítulos con estos códigos lang (ej: spa, es, spa)"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "fields": [
+    {
+      "key": "languages",
+      "label": "Idiomas",
+      "type": "string",
+      "default": "spa",
+      "description": "Códigos lang a conservar (coma). Por defecto solo español: spa"
+    }
+  ]
+}

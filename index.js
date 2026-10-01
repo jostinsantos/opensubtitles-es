@@ -30,14 +30,25 @@ function buildUrl(ctx) {
   return `${BASE}/subtitles/movie/${imdb}.json`;
 }
 
+/**
+ * Normaliza y expande la lista de idiomas permitidos.
+ * Incluye variaciones comunes de español (spa, es, spanish, es-es, es-419, lat).
+ */
 function allowedLangs(config) {
-  const raw =
-    (config && (config.languages || config.langFilter)) ||
-    'spa';
-  return String(raw)
+  const raw = (config && (config.languages || config.langFilter)) || 'spa';
+  const inputLangs = String(raw)
     .split(/[,|]/)
     .map((x) => x.trim().toLowerCase())
     .filter(Boolean);
+
+  const spanishVariants = ['spa', 'es', 'spanish', 'es-es', 'es-419', 'lat'];
+  const hasSpanish = inputLangs.some((l) => spanishVariants.includes(l));
+
+  if (hasSpanish) {
+    return Array.from(new Set([...inputLangs, ...spanishVariants]));
+  }
+
+  return inputLangs;
 }
 
 /**
@@ -49,13 +60,13 @@ function normalizeItem(item, addonId) {
   const lang = (item.lang || item.language || item.langCode || 'und')
     .toString()
     .toLowerCase();
+
+  // Prioriza movieReleaseName sobre el resto de propiedades
   const label =
-    item.subtitleFileName ||
     item.movieReleaseName ||
-    item.releaseGroup ||
+    item.subtitleFileName ||
     item.label ||
-    item.id ||
-    lang;
+    `Subtítulo (${lang.toUpperCase()})`;
 
   return {
     id: String(item.id || url),
@@ -114,4 +125,3 @@ if (typeof module !== 'undefined' && module.exports) {
 if (typeof globalThis !== 'undefined') {
   globalThis.getSubtitles = getSubtitles;
 }
-
